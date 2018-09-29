@@ -36,15 +36,15 @@ Consulte a guia [Tags](https://hub.docker.com/r/fabiojanio/ionic/tags/) no repos
 Caso já tenha um projeto Ionic, OPCIONALMENTE você pode iniciar um container temporário para testar o aplicativo em modo servidor:
 
 ```
-docker run --rm -v /myApp/:/app -p 8100:8100 -p 35729:35729 -p 53703:53703 --name nome_do_container fabiojanio/ionic:3.20.0 ionic serve
+docker run --rm -v /myApp/:/app -p 8100:8100 -p 35729:35729 -p 53703:53703 fabiojanio/ionic ionic serve
 ```
 
-**Obs**: no lugar de *myApp* você DEVE informar o caminho absoluto do diretório a ser compartilhado com o container.
+**Obs**: no lugar de *myApp* você DEVE informar o caminho absoluto do diretório a ser compartilhado com o container. Por ser um container temporário o mesmo não foi nomeado.
 
 Caso queira criar um novo container para dá inicio a um projeto Ionic, execute:
 
 ```
-docker run -it -p 8100:8100 -p 35729:35729 -p 53703:53703 --name nome_do_container fabiojanio/ionic:3.20.0 /bin/bash
+docker run -it -p 8100:8100 -p 35729:35729 -p 53703:53703 --name nome_do_container fabiojanio/ionic /bin/bash
 ```
 
 Caso já tenha um container criado anteriormente por meio da instrução `run`, basta executar este comando para iniciar o container:
@@ -58,6 +58,17 @@ Para se conectar a um container basta executar:
 ```
 docker exec -it nome_do_container /bin/bash
 ```
+
+### Dica
+
+Caso queira compilar um **apk** para Android, não é necessário conectar no container, basta executar:
+
+```
+docker run --rm -v $(pwd):/app fabiojanio/ionic ionic cordova build android --prod
+```
+
+Neste caso utilizei `$(pwd)` pois em ambiente unix-like isso é uma referência absoluta para o diretório corrente.
+
 
 ## docker-compose.yml
 
